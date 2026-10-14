@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spider-Man Movie Archive</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            margin: 40px;
+            background-color: black;
+            color: white;
+        }
+
+        h1 {
+            color: red;
+        }
+
+        h2 {
+            color: #438bff;
+        }
+
+        label {
+            display: block;
+            margin-top: 10px;
+        }
+
+        input, select {
+            display: block;
+            padding: 5px;
+            width: 250px;
+            margin-top: 5px;
+        }
+
+        button {
+            margin-top: 15px;
+            padding: 8px 12px;
+            background-color: red;
+            color: white;
+            border: 1px solid black;
+            cursor: pointer;
+        }
+
+        .movie-card {
+            border: 1px solid #438bff;
+            padding: 10px;
+            margin-top: 10px;
+            max-width: 400px;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>Spider-Man Movie Archive</h1>
+    <p>Add your favorite Spider-Man movies to our collection!</p>
+
+    <h2>Add a Movie</h2>
+
+    <form id="movieForm">
+        <label for="title">Movie Title:</label>
+        <input type="text" id="title" required>
+
+        <label for="year">Release Year:</label>
+        <input type="number" id="year" min="2000" max="2100" required>
+
+        <label for="series">Series:</label>
+        <select id="series" required>
+            <option value="">Choose a series</option>
+            <option value="Raimi Trilogy">Raimi Trilogy</option>
+            <option value="Amazing Spider-Man">Amazing Spider-Man</option>
+            <option value="MCU">MCU</option>
+            <option value="Spider-Verse">Spider-Verse</option>
+        </select>
+
+        <label for="format">Format:</label>
+        <select id="format" required>
+            <option value="">Choose a format</option>
+            <option value="Live Action">Live Action</option>
+            <option value="Animated">Animated</option>
+        </select>
+
+        <button type="submit">Add Movie</button>
+    </form>
+
+    <h2>Movie Collection</h2>
+    <div id="movieList"></div>
+
+    <button id="downloadBtn" type="button">Download JSON</button>
+
+    <script>
+        let movies = [
+            {
+                title: "Spider-Man",
+                year: "2002",
+                series: "Raimi Trilogy",
+                format: "Live Action"
+            },
+            {
+                title: "The Amazing Spider-Man",
+                year: "2012",
+                series: "Amazing Spider-Man",
+                format: "Live Action"
+            },
+            {
+                title: "Spider-Man: Into the Spider-Verse",
+                year: "2018",
+                series: "Spider-Verse",
+                format: "Animated"
+            }
+        ];
+
+        function showMovies() {
+            const movieList = document.getElementById("movieList");
+            movieList.innerHTML = "";
+
+            movies.forEach(function(movie) {
+                const card = document.createElement("div");
+                card.className = "movie-card";
+
+                const title = document.createElement("strong");
+                title.textContent = movie.title + " (" + movie.year + ")";
+
+                const details = document.createElement("div");
+                details.textContent = movie.series + " - " + movie.format;
+
+                card.appendChild(title);
+                card.appendChild(details);
+                movieList.appendChild(card);
+            });
+        }
+
+        document.getElementById("movieForm").addEventListener("submit", function(event) {
+            event.preventDefault();
+
+            const title = document.getElementById("title").value.trim();
+            const year = document.getElementById("year").value.trim();
+            const series = document.getElementById("series").value;
+            const format = document.getElementById("format").value;
+
+            if (!title || !year || !series || !format) {
+                alert("Please fill in all fields.");
+                return;
+            }
+
+            const confirmed = confirm(
+                "Is this information correct?\n\n" +
+                "Title: " + title + "\n" +
+                "Year: " + year + "\n" +
+                "Series: " + series + "\n" +
+                "Format: " + format
+            );
+
+            if (confirmed) {
+                movies.push({
+                    title: title,
+                    year: year,
+                    series: series,
+                    format: format
+                });
+
+                showMovies();
+                document.getElementById("movieForm").reset();
+                alert("Movie added successfully!");
+            }
+        });
+
+        document.getElementById("downloadBtn").addEventListener("click", function() {
+            const data = JSON.stringify(movies, null, 4);
+            const file = new Blob([data], { type: "application/json" });
+            const url = URL.createObjectURL(file);
+
+            const link = document.createElement("a");
+            link.href = url;
+            link.download = "spiderman_movies.json";
+            document.body.appendChild(link);
+            link.click();
+            document.body.removeChild(link);
+
+            URL.revokeObjectURL(url);
+        });
+
+        showMovies();
+    </script>
+
+</body>
+</html>

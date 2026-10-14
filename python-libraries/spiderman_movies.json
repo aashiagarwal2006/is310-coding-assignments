@@ -1,0 +1,32 @@
+[
+    {
+        "title": "Spider-Man",
+        "year": "2002",
+        "series": "Raimi Trilogy",
+        "format": "Live Action"
+    },
+    {
+        "title": "The Amazing Spider-Man",
+        "year": "2012",
+        "series": "Amazing Spider-Man",
+        "format": "Live Action"
+    },
+    {
+        "title": "Spider-Man: Into the Spider-Verse",
+        "year": "2018",
+        "series": "Spider-Verse",
+        "format": "Animated"
+    },
+    {
+        "title": "Spider-Man: No Way Home",
+        "year": "2021",
+        "series": "MCU",
+        "format": "Live Action"
+    },
+    {
+        "title": "Spider-Man: Across the Spider-Verse",
+        "year": "2023",
+        "series": "Spider-Verse",
+        "format": "Animated"
+    }
+]
