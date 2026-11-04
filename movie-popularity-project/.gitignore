@@ -1,0 +1,7 @@
+.venv/
+__pycache__/
+.DS_Store
+data/
+output/selected_reviews.csv
+output/final_movie_dataset.csv
+output/movie_annotations.csv
